@@ -14,18 +14,18 @@ import csv
 
 # The thresholds and filenames etc. need to be placed below
 
-path_sample = r"/Users/Mathew/Documents/Edinburgh Code/Aggregate_Flow/Test_conc_data/asyn/500 nM/"           # This is the folder that contains the dye + sample
-file_stem_sample="pftaa"   
+path_sample = r"/Users/Mathew/Documents/Current analysis/20210610_3h_5nMAb_5uMThT/"           # This is the folder that contains the dye + sample
+file_stem_sample="AbThT"   
 
 
 
-number_of_files=3       # Number of files in the folder (could make this automatic in the future).
+number_of_files=5       # Number of files in the folder (could make this automatic in the future).
 
 # Set the various thresholds here
 
 threshold_small=40
-threshold_medium=80
-threshold_large=120
+threshold_medium=500
+threshold_large=1000
 
 
 
@@ -77,7 +77,16 @@ plt.show()
 all_events,small_events,medium_events,large_events=intensity_separate(channelA_arr_sample)
 
 
+plt.hist(all_events,bins = 50,range=[threshold_small,1000], rwidth=0.9,color='#ff0000')
+plt.xlabel('Intensity (photons)',size=20)
+plt.yscale('log')
+plt.ylabel('Number of Events',size=20)
+plt.savefig(path_sample+"Intensities.pdf")
+plt.show()
 
+total_events=len(all_events)
+total_small=len(small_events)
+total_medium=len(medium_events)
+total_large=len(large_events)
 
-
-
+print('All events: %d \nSmall events: %d\nMedium events: %d\nLarge events: %d'%(total_events,total_small,total_medium,total_large))
