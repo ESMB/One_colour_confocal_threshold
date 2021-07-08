@@ -14,15 +14,15 @@ import csv
 
 # The thresholds and filenames etc. need to be placed below
 
-path_control = r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Aggregate_Flow/Test_conc_data/PFTAA calibration/125 nM/"           # This is the folder that contains the dye only
+path_control = r"/Users/Mathew/Documents/Current analysis/20210527_Confocal_Craig/PFTAA/NewsetupMediaOnly_Neat_18nMpFTAA/"           # This is the folder that contains the dye only
 file_stem_control="pftaa"                     # This is the filename before the underscore. 
 
-path_sample = r"/Users/Mathew/Dropbox (Cambridge University)/Ed Code/Aggregate_Flow/Test_conc_data/asyn/125 nM/"           # This is the folder that contains the dye + sample
+path_sample = r"/Users/Mathew/Documents/Current analysis/20210527_Confocal_Craig/PFTAA/Newsetup_AST183dCHQ_day98_18nMpFTAA_Neat/"           # This is the folder that contains the dye + sample
 file_stem_sample="pftaa"   
 
 
 
-number_of_files=3       # Number of files in the folder (could make this automatic in the future).
+number_of_files=1       # Number of files in the folder (could make this automatic in the future).
 
 
 
@@ -47,7 +47,7 @@ def load_files_control(number_of_files):
                 channelB_control.append(row[1])
                 a+=1
         
-        print "Loaded %s, which contains %s rows."%(filename,a)   
+        print("Loaded %s, which contains %s rows."%(filename,a))   
         
     channelA_arr_control=np.asarray(channelA_control,dtype=np.float32)                              # Converts these to numpy arrays for vector calcs.
     channelB_arr_control=np.asarray(channelB_control,dtype=np.float32)
@@ -76,7 +76,7 @@ def load_files_sample(number_of_files):
                 channelB_sample.append(row[1])
                 a+=1
         
-        print "Loaded %s, which contains %s rows."%(filename,a)   
+        print ("Loaded %s, which contains %s rows."%(filename,a))   
         
     channelA_arr_sample=np.asarray(channelA_sample,dtype=np.float32)                              # Converts these to numpy arrays for vector calcs.
     channelB_arr_sample=np.asarray(channelB_sample,dtype=np.float32)
@@ -91,8 +91,8 @@ plt.rcParams["font.size"] = "12"
 plt.figure(figsize=(8, 6))
 plt.plot(channelA_arr_sample,color='#ff0000',alpha=0.5,label="Sample Events")
 plt.plot(channelA_arr_control,color='#cccccc',alpha=0.5,label="Control Events")         
-plt.xlim(0,10000)
-plt.ylim(0,100)
+plt.xlim(1740000,1760000)
+plt.ylim(0,200)
 plt.legend(loc='upper right')         
 plt.xlabel('Bin number')
 plt.ylabel('Photons/bin')
@@ -100,10 +100,10 @@ plt.show()
 
 
 def threshtest():
-    sample = np.zeros(shape=(500))
-    control = np.zeros(shape=(500))
-    fraction_events=np.zeros(shape=(500))
-    for A in range(500):
+    sample = np.zeros(shape=(5000))
+    control = np.zeros(shape=(5000))
+    fraction_events=np.zeros(shape=(5000))
+    for A in range(0,200):
     
         # go through sample first
         channelA_real_events=channelA_arr_sample[(channelA_arr_sample>A)]                       # Total A events
@@ -136,14 +136,15 @@ def threshtest():
     
     Threshold=result
     
-    print 'The maximum ratio of real events is %.3f, with a threshold of %s in channel A. This gave %.3f real events, %.3f control events.'%(maximum_frac,str(Threshold),var_real_events_thresh,var_control_events_thresh)
+    # print('The maximum ratio of real events is %.3f, with a threshold of %s in channel A. This gave %.3f real events, %.3f control events.'%(maximum_frac,str(Threshold),var_real_events_thresh,var_control_events_thresh))
     
     plt.rcParams["font.family"] = "Arial"
     plt.rcParams["font.size"] = "12"
     plt.figure(figsize=(8, 6))
     plt.plot(control,color='#cccccc',alpha=0.5,label="Control Events")
     plt.plot(sample,color='#ff0000',alpha=0.5,label="Sample Events")      
-    plt.xlim(0,100)
+    plt.xlim(40,200)
+    plt.ylim(0,50)
     plt.legend(loc='upper right')         
     plt.xlabel('Threshold (photons/bin)')
     plt.ylabel('Number of Events')
@@ -153,12 +154,16 @@ def threshtest():
     plt.rcParams["font.size"] = "12"
     plt.figure(figsize=(8, 6))
     plt.plot(fraction_events,color='#0000ff',alpha=0.5,label="Sample/Control")  
-    plt.xlim(0,100)
+    plt.xlim(40,200)
     plt.legend(loc='upper right')         
     plt.xlabel('Threshold (photons/bin)')
     plt.ylabel('Number of events')
     plt.show()
-    
-    
-       
+         
 threshtest()
+
+
+sbr_control=channelA_arr_control/channelA_arr_control.mean()
+sbr_sample=channelA_arr_sample/channelA_arr_sample.mean()
+
+
