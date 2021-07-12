@@ -14,10 +14,10 @@ import csv
 
 # The thresholds and filenames etc. need to be placed below
 
-path_control = r"/Users/Mathew/Documents/Current analysis/20210527_Confocal_Craig/PFTAA/NewsetupMediaOnly_Neat_18nMpFTAA/"           # This is the folder that contains the dye only
+path_control = r"/Users/Mathew/Documents/Edinburgh Code/Aggregate_Flow/Test_conc_data/PFTAA calibration/0 nM/"           # This is the folder that contains the dye only
 file_stem_control="pftaa"                     # This is the filename before the underscore. 
 
-path_sample = r"/Users/Mathew/Documents/Current analysis/20210527_Confocal_Craig/PFTAA/Newsetup_AST183dCHQ_day98_18nMpFTAA_Neat/"           # This is the folder that contains the dye + sample
+path_sample = r"/Users/Mathew/Documents/Edinburgh Code/Aggregate_Flow/Test_conc_data/PFTAA calibration/500 nM/"           # This is the folder that contains the dye + sample
 file_stem_sample="pftaa"   
 
 
@@ -136,7 +136,7 @@ def threshtest():
     
     Threshold=result
     
-    # print('The maximum ratio of real events is %.3f, with a threshold of %s in channel A. This gave %.3f real events, %.3f control events.'%(maximum_frac,str(Threshold),var_real_events_thresh,var_control_events_thresh))
+    print('The maximum ratio of real events is %.3f, with a threshold of %s in channel A. This gave %.3f real events, %.3f control events.'%(maximum_frac,str(Threshold),var_real_events_thresh,var_control_events_thresh))
     
     plt.rcParams["font.family"] = "Arial"
     plt.rcParams["font.size"] = "12"
